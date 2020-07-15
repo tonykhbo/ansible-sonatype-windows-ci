@@ -20,7 +20,7 @@
         status_code: 200, 302
       register: md5
     - debug:
-        var: md5.content
+        var: md5
     
     - name: Get Download URL for {{ release_name }}
       win_uri:
@@ -34,6 +34,5 @@
     - name: Artifact URL and MD5 of {{ release_name }} to Tower Workflow
       set_stats:
         data:
-          md5: "{{ md5.content }}"
+          md5: "{{ md5 }}"
           download_url: "{{ download_url.response_uri }}"
-    - debug: 
