@@ -19,15 +19,6 @@
       register: md5
     - debug:
         var: md5.stdout_lines
-
-    - name: Get MD5 of Release for {{ release_name }}
-      win_uri:
-        url: http://nexus3-test.apps.box.wul.fi/service/rest/v1/search/assets/download?repository=maven-releases&sort=version&name={{ release_name }}&maven.extension=jar.md5&maven.classifier
-        return_content: yes
-        status_code: 200, 302
-      register: old_md5
-    - debug:
-        var: old_md5
     
     - name: Get Download URL for {{ release_name }}
       win_uri:
@@ -41,5 +32,5 @@
     - name: Artifact URL and MD5 of {{ release_name }} to Tower Workflow
       set_stats:
         data:
-          md5: "{{ md5 }}"
+          md5: "{{ md5.stdout_lines }}"
           download_url: "{{ download_url.response_uri }}"
