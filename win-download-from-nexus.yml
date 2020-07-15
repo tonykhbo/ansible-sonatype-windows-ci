@@ -4,7 +4,7 @@
   vars:
     release_name: java-WebServer
     download_url: http://nexus3-test.apps.box.wul.fi/repository/maven-releases/com/dasanjos/java/java-WebServer/0.1/java-WebServer-0.1.jar
-    md5: 8113a382371293fb5c2535900ac36551
+    md5: 555
   tasks:
     - name: Download Package with check (MD5)
       win_get_url:

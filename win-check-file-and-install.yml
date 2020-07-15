@@ -3,7 +3,7 @@
   gather_facts: no
   vars:
     app_name: java-WebServer
-    md5: 8113a382371293fb5c2535900ac36551
+    md5: 333
     file_location: C:\Users\ansible\Downloads\{{ app_name }}.jar
     java_path: C:\Program Files (x86)\Java\jre1.8.0_251\bin\java.exe
     port: 8081
