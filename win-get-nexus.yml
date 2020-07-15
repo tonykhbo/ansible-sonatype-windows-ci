@@ -27,7 +27,7 @@
         status_code: 200, 302
       register: jar_download_url
     - debug:
-       var: jar_download_url
+       var: jar_download_url.location #.location for ansible tower, .response_uri for ansible engine
 
     - name: Artifact URL and MD5 of {{ release_name }} to Tower Workflow
       set_stats:
