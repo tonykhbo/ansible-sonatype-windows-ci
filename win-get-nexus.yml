@@ -16,6 +16,7 @@
       win_uri:
         url: http://nexus3-test.apps.box.wul.fi/service/rest/v1/search/assets/download?repository=maven-releases&sort=version&name={{ release_name }}&maven.extension=jar.md5&maven.classifier
         return_content: yes
+        status_code: 200, 302
       register: md5
     - debug:
         var: md5.content
@@ -24,7 +25,6 @@
       win_uri:
         url: http://nexus3-test.apps.box.wul.fi/service/rest/v1/search/assets/download?repository=maven-releases&name={{ release_name }}&maven.extension=jar&maven.classifier
         return_content: yes
-        status_code: 200, 302
       register: download_url
     - debug:
        var: download_url.response_uri
