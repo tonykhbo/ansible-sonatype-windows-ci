@@ -27,10 +27,10 @@
         status_code: 200, 302
       register: jar_download_url
     - debug:
-       var: jar_download_url.response_uri
+       var: jar_download_url
 
     - name: Artifact URL and MD5 of {{ release_name }} to Tower Workflow
       set_stats:
         data:
           md5: "{{ md5.stdout_lines }}"
-          download_url: "{{ download_url.response_uri }}"
+          download_url: "{{ jar_download_url.response_uri }}"
