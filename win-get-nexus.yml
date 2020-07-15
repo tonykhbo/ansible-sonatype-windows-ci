@@ -13,14 +13,21 @@
     - debug: 
         var: http_output.json
     
+
+    - name: Curling for MD5 from Cmdline
+      win_command: curl -sL http://nexus3-test.apps.box.wul.fi/service/rest/v1/search/assets/download?repository=maven-releases&sort=version&name={{ release_name }}&maven.extension=jar.md5&maven.classifier
+      register: md5
+    - debug:
+        var: md5.stdout_lines
+
     - name: Get MD5 of Release for {{ release_name }}
       win_uri:
         url: http://nexus3-test.apps.box.wul.fi/service/rest/v1/search/assets/download?repository=maven-releases&sort=version&name={{ release_name }}&maven.extension=jar.md5&maven.classifier
         return_content: yes
         status_code: 200, 302
-      register: md5
+      register: old_md5
     - debug:
-        var: md5
+        var: old_md5
     
     - name: Get Download URL for {{ release_name }}
       win_uri:
