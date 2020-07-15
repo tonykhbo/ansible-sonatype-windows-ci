@@ -4,6 +4,6 @@
     download_url: https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260
   tasks:
     - name: download pic to windows
-      win_get_url: "{{ download_url }}"
-        url: 
+      win_get_url: 
+        url: "{{ download_url }}"
         dest: C:\Users\ansible\Downloads\dog.jpg
