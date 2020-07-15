@@ -1,0 +1,29 @@
+---
+- hosts: windows
+  gather_facts: no
+  vars:
+    release_name: java-WebServer
+  tasks:
+    - name: Check Nexus Repo for Maven Releases
+      win_uri:
+        url: http://nexus3-test.apps.box.wul.fi/service/rest/v1/search/assets?repository=maven-releases&name={{ release_name }}&maven.extension=jar&maven.classifier
+        return_content: yes
+      register: http_output
+    - debug: 
+        var: http_output.json
+    
+    - name: Get MD5 of Release for {{ release_name }}
+      win_uri:
+        url: http://nexus3-test.apps.box.wul.fi/service/rest/v1/search/assets/download?repository=maven-releases&sort=version&name={{ release_name }}&maven.extension=jar.md5&maven.classifier
+        return_content: yes
+      register: md5
+    - debug:
+        var: md5.content
+    
+    - name: Get Download URL for {{ release_name }}
+      win_uri:
+        url: http://nexus3-test.apps.box.wul.fi/service/rest/v1/search/assets/download?repository=maven-releases&name={{ release_name }}&maven.extension=jar&maven.classifier
+        return_content: yes
+      register: download_url
+    - debug:
+       var: download_url.response_uri

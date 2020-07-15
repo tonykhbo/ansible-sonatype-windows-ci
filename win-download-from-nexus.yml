@@ -1,0 +1,15 @@
+---
+- hosts: windows
+  gather_facts: no
+  vars:
+    release_name: java-WebServer
+    download_url: http://nexus3-test.apps.box.wul.fi/repository/maven-releases/com/dasanjos/java/java-WebServer/0.1/java-WebServer-0.1.jar
+    md5: 8113a382371293fb5c2535900ac36551
+  tasks:
+    - name: Download Package with check (MD5)
+      win_get_url:
+        url: "{{ download_url }}"
+        dest: C:\Users\ansible\Downloads\{{ release_name }}.jar
+        checksum: "{{ md5 }}"
+        checksum_algorithm: md5
+        force: yes

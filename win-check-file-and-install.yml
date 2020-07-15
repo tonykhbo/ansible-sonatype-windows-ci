@@ -1,0 +1,51 @@
+---
+- hosts: windows
+  gather_facts: no
+  vars:
+    app_name: java-WebServer
+    md5: 8113a382371293fb5c2535900ac36551
+    file_location: C:\Users\ansible\Downloads\{{ app_name }}.jar
+    java_path: C:\Program Files (x86)\Java\jre1.8.0_251\bin\java.exe
+    port: 8081
+  tasks:
+    - name: Download Package with check (MD5)
+      win_stat:
+        path: "{{ file_location }}"
+        get_checksum: yes
+        checksum_algorithm: md5
+      register: file_md5_checksum
+    - debug:
+        var: file_md5_checksum.stat.checksum
+    
+    - name: Running Jar from CMD Line
+      win_command: java -jar {{ file_location }}   
+      register: cmdline_output
+    - debug: 
+        var: cmdline_output.stdout_lines
+    
+    - name: Install nssm (non-sucking service manager) with chocolatey
+      win_chocolatey: 
+        name: nssm
+      failed_when: file_md5_checksum.stat.checksum  != "{{ md5 }}"
+
+    - name: Install Jar if MD5 matches
+      win_nssm:
+        name: "{{ app_name }}"
+        application: "{{ java_path }}"
+        arguments:
+          - -jar 
+          - "{{ file_location }}"
+          - "{{ port }}"
+        state: stopped
+      failed_when: file_md5_checksum.stat.checksum != "{{ md5 }}"
+      register: jar_output
+    - debug:
+        var: jar_output
+  
+    - name: Fire up Spring Boot app Windows service
+      win_service:
+        name: "{{ app_name }}"
+        state: restarted
+      register: service_output
+    - debug: 
+        var: service_output
