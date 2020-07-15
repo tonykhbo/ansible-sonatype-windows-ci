@@ -25,9 +25,9 @@
         url: http://nexus3-test.apps.box.wul.fi/service/rest/v1/search/assets/download?repository=maven-releases&name={{ release_name }}&maven.extension=jar&maven.classifier
         return_content: yes
         status_code: 200, 302
-      register: download_url
+      register: jar_download_url
     - debug:
-       var: download_url.response_uri
+       var: jar_download_url.response_uri
 
     - name: Artifact URL and MD5 of {{ release_name }} to Tower Workflow
       set_stats:
