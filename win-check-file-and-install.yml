@@ -18,7 +18,7 @@
         var: file_md5_checksum.stat.checksum
     
     - name: Running Jar from CMD Line
-      win_command: java -Dserver.port={{ port }} -jar {{ file_location }}   
+      win_command: java -jar {{ file_location }} {{ app_port }}
       register: cmdline_output
       when: file_md5_checksum == "null"
     - debug: 
@@ -34,9 +34,9 @@
         name: "{{ app_name }}"
         application: "{{ java_path }}"
         arguments:
-          - -Dserver.port={{ app_port }}
           - -jar 
           - "{{ file_location }}"
+          - "{{ app_port }}"
         state: stopped
       failed_when: file_md5_checksum.stat.checksum  != "{{ md5 }}"
       register: jar_output
