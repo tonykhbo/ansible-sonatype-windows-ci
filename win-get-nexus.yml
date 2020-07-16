@@ -32,5 +32,5 @@
     - name: Artifact URL and MD5 of {{ release_name }} to Tower Workflow
       set_stats:
         data:
-          md5: "{{ md5.stdout_lines }}"
+          md5: "{{ md5.stdout_lines | string }}"
           download_url: "{{ download_url.location }}"
