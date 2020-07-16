@@ -27,10 +27,10 @@
         status_code: 200, 302
       register: download_url
     - debug:
-       var: download_url.status_code #.location for ansible tower, .response_uri for ansible engine
+       var: download_url.location #.location for ansible tower, .response_uri for ansible engine
 
     - name: Artifact URL and MD5 of {{ release_name }} to Tower Workflow
       set_stats:
         data:
           md5: "{{ md5.stdout_lines }}"
-          download_url: "{{ download_url.status_code }}"
+          download_url: "{{ download_url.location }}"
