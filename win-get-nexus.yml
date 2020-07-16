@@ -18,7 +18,7 @@
       win_command: curl -sL http://nexus3-test.apps.box.wul.fi/service/rest/v1/search/assets/download?repository=maven-releases&sort=version&name={{ release_name }}&maven.extension=jar.md5&maven.classifier
       register: md5
     - debug:
-        var: md5.stdout_lines
+        var: md5.stdout
     
     - name: Get Download URL for {{ release_name }}
       win_uri:
@@ -32,5 +32,5 @@
     - name: Artifact URL and MD5 of {{ release_name }} to Tower Workflow
       set_stats:
         data:
-          md5: "{{ md5.stdout_lines | to_yaml }}"
+          md5: "{{ md5.stdout }}"
           download_url: "{{ download_url.location }}"
