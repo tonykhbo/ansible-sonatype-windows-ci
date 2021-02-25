@@ -6,4 +6,4 @@
     - name: download pic to windows
       win_get_url: 
         url: "{{ download_url }}"
-        dest: C:\Users\ansible\Downloads\dog.jpg
+        dest: ~\Downloads\dog.jpg
