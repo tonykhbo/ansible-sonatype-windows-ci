@@ -1,5 +1,5 @@
 ---
-- hosts: windows
+- hosts: all
   vars:
     download_url: https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260
   tasks:
